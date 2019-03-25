@@ -1,4 +1,4 @@
-# TimesOfIsrael
+# TimesOfIsrael Twitter Project
 TimesOfIsrael Twitter project
 
 This is a simple application that queries Twitter for Tweets with a given search term.
