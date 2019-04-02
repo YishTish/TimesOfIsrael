@@ -1,5 +1,6 @@
 import os
 import json
+from pathlib import Path
 import datetime
 from TwitterAPI import TwitterAPI
 from dateutil.parser import parse
@@ -13,7 +14,7 @@ tzinfos = {"CST": gettz("Asia/Jerusalem")}
 SEARCH_TERM = "גנץ"
 NUMBER_OF_TWEETS = 10
 now = datetime.datetime.now()
-outputDirectory = os.path.join(os.getcwd(), "output")
+outputDirectory = Path(os.getcwd(), "output")
 
 fileName = "%s_%d%02d%02d-%02d%02d%02d" % (SEARCH_TERM, now.year, now.month, now.day, now.hour, now.minute, now.second)
 if __name__ == '__main__':
@@ -26,7 +27,8 @@ if __name__ == '__main__':
     firstTweetCreatedAt = tweets['statuses'][0]['created_at']
     print("first tweet created at: %s" % firstTweetCreatedAt)
     print(parse(firstTweetCreatedAt, tzinfos=tzinfos))
-    with open(os.path.join(outputDirectory, "csv", "%s.csv" % fileName), "w") as outputCsv:
+    csvFilename = "%s.csv" % fileName
+    with open(outputDirectory / "csv" / csvFilename, "w") as outputCsv:
         headers = "tweet_id\tcreated_at\tuser_name\tuser_handle\ttext\tmentions_handles\turls\thashtags\tfavorite_count\tretweet_count"
         outputCsv.write(headers+"\n")
         for tweet in tweets['statuses']:
@@ -45,7 +47,8 @@ if __name__ == '__main__':
                                                                  tweet_urls, tweet_hashtags, tweet['retweet_count'], tweet['favorite_count'])
 
             outputCsv.write(line)
-    with open(os.path.join(outputDirectory, "json", "%s.json" % fileName), "w") as fileWriter:
+    jsonFileName = "%s.json" % fileName
+    with open(outputDirectory / "json" / jsonFileName, "w") as fileWriter:
         fileWriter.write(json.dumps(r.response.json()))
     print("Output written to file")
 
