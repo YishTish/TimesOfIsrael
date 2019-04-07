@@ -21,14 +21,13 @@ import TweetManager
 # called `app` in `main.py`.
 
 public_dir = os.path.join(os.getcwd(), "public/")
-print("serving public files from: %s" % public_dir)
 app = Flask(__name__, static_url_path=public_dir)
 
 
 @app.route('/')
 def hello():
     """Return a friendly HTTP greeting."""
-    return send_from_directory("%s/html" % public_dir, "index.html")
+    return render_template("index.html")
 
 
 @app.route("/search_tweets", methods=['GET'])
