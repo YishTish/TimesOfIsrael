@@ -29,7 +29,6 @@ def hello():
     """Return a friendly HTTP greeting."""
     return render_template("index.html")
 
-
 @app.route("/search_tweets", methods=['GET'])
 def search_tweets():
     term = request.values['term']
@@ -37,6 +36,10 @@ def search_tweets():
     headers = tweets_array.pop(0)
     return render_template("terms.html", term=term, tweet_count=len(tweets_array), headers=headers, tweets=tweets_array, word_count=word_count)
 
+
+@app.route("/favicon.ico")
+def get_favicon():
+    return send_from_directory("%simg" % public_dir, "favicon.ico")
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
