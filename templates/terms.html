@@ -31,27 +31,43 @@
 </form>
 <hr>
 <h1>Returned Tweets for {{ term }}:</h1>
-<p>Number of tweets returned: {{ tweets|length }}</p>
-{% if tweets|length > 0 %}
-<table id="example" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-    <tr>
-   {% for key in headers.keys() %}
-            <th>{{key}}</th>
-   {% endfor %}
-    </tr>
-    </thead>
-    <tbody>
-    {% for tweet in tweets %}
-    <tr>
-        {% for key in headers.keys() %}
-        <td>{{tweet[key]}}</td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+<div class="container-fluid">
+    <div class="col-lg-9">
+        <p>Number of tweets returned: {{ tweets|length }}</p>
+        {% if tweets|length > 0 %}
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+            <tr>
+                {% for key in headers.keys() %}
+                <th>{{key}}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for tweet in tweets %}
+            <tr>
+                {% for key in headers.keys() %}
+                <td>{{tweet[key]}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    <div class="col-lg-3">
+        {% if word_count| length > 0 %}
+        <h2>Popular words</h2>
+        <ul>
+            {% for pair in word_count %}
+                <li>
+                    {% for key in pair %}{{key}} {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         var table = $('#example').DataTable( {
@@ -61,6 +77,10 @@
 
         table.buttons().container()
             .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
+
+        // $('li').click(function(){
+        //     $(this).hide();
+        // });
     } );
 </script>
 </body>

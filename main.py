@@ -35,7 +35,7 @@ def search_tweets():
     term = request.values['term']
     tweets_array, word_count = TweetManager.run_tweets_search(term)
     headers = tweets_array.pop(0)
-    return render_template("terms.html", term=term, tweet_count=len(tweets_array), headers=headers, tweets=tweets_array)
+    return render_template("terms.html", term=term, tweet_count=len(tweets_array), headers=headers, tweets=tweets_array, word_count=word_count)
 
 
 if __name__ == '__main__':
